@@ -7,18 +7,21 @@ export default function Header() {
   const { isSignedIn } = useUser();
 
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
         <Link href="/" className="text-2xl font-bold text-blue-600">
-          🤖 AI 도구 리뷰
+          AI 도구 리뷰
         </Link>
 
         <nav className="flex items-center gap-6">
-          <Link href="/" className="text-gray-600 hover:text-blue-600 transition">
+          <Link href="/" className="text-gray-600 transition hover:text-blue-600">
             홈
           </Link>
+          <Link href="/tools" className="text-gray-600 transition hover:text-blue-600">
+            유용한 도구
+          </Link>
           {isSignedIn && (
-            <Link href="/dashboard" className="text-gray-600 hover:text-blue-600 transition">
+            <Link href="/dashboard" className="text-gray-600 transition hover:text-blue-600">
               글쓰기
             </Link>
           )}
@@ -28,12 +31,10 @@ export default function Header() {
             ) : (
               <>
                 <SignInButton mode="modal">
-                  <button className="text-gray-600 hover:text-blue-600 transition">
-                    로그인
-                  </button>
+                  <button className="text-gray-600 transition hover:text-blue-600">로그인</button>
                 </SignInButton>
                 <SignUpButton mode="modal">
-                  <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                  <button className="rounded-lg bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700">
                     회원가입
                   </button>
                 </SignUpButton>
