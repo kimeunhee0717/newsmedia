@@ -1,11 +1,11 @@
-﻿"use client";
+"use client";
 /* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import { ChevronLeft, RotateCcw, Undo2, Trophy, Settings, User, Bot, Volume2, VolumeX } from '@/components/icons/LucideLite';
 import Link from 'next/link';
 
 
-function SEOHead() { return null; }
+function SEOHead(_props: { title?: string; description?: string; url?: string }) { return null; }
 // ============================================================================
 // ?쒓뎅?κ린 - ?꾩쟾 ?ъ꽕怨?v3 (?몃젴???붿옄??+ ?꾩튂援먰솚)
 // ============================================================================

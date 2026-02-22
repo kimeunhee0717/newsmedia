@@ -5,7 +5,7 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { ChevronLeft, RotateCcw, Trophy, User, Bot, Volume2, VolumeX } from '@/components/icons/LucideLite';
 import Link from 'next/link';
 
-function SEOHead() { return null; }
+function SEOHead(_props: { title?: string; description?: string; url?: string }) { return null; }
 
 // ============================================================================
 // 오목 (Gomoku) - 15x15 보드, 3-3/4-4 금수, 입체 돌
@@ -249,7 +249,10 @@ class GomokuRules {
 // ============================================================================
 // AI — Web Worker로 별도 스레드에서 실행 (UI 멈춤 방지)
 // ============================================================================
-import GomokuWorker from '../../workers/gomokuAI.worker?worker';
+// Next.js compatible worker creation (no ?worker import)
+function createGomokuWorker() {
+  return new Worker(new URL('../../workers/gomokuAI.worker.ts', import.meta.url));
+}
 
 // ============================================================================
 // 메인 컴포넌트
@@ -277,7 +280,7 @@ export default function GomokuGame() {
 
   // Worker 생성/재생성
   useEffect(() => {
-    workerRef.current = new GomokuWorker();
+    workerRef.current = createGomokuWorker();
     return () => { workerRef.current?.terminate(); };
   }, []);
 

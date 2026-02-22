@@ -1,10 +1,10 @@
-﻿"use client";
+"use client";
 /* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { ChevronLeft, RotateCcw, Flag, User, Bot, Volume2, VolumeX, SkipForward } from '@/components/icons/LucideLite';
 import Link from 'next/link';
 
-function SEOHead() { return null; }
+function SEOHead(_props: { title?: string; description?: string; url?: string }) { return null; }
 
 // ============================================================================
 // 諛붾몣 (Baduk / Go) ??13횞13, MCTS AI, 以묎뎅??怨꾧?, ??6.5
@@ -235,7 +235,10 @@ function calculateTerritory(board: number[][]): number[][] {
 // ============================================================================
 // Worker import
 // ============================================================================
-import BadukWorker from '../../workers/badukAI.worker?worker';
+// Next.js compatible worker creation (no ?worker import)
+function createBadukWorker() {
+  return new Worker(new URL('../../workers/badukAI.worker.ts', import.meta.url));
+}
 
 // ============================================================================
 // 而댄룷?뚰듃
@@ -278,7 +281,7 @@ export default function BadukGame() {
 
   // Worker ?앹꽦
   useEffect(() => {
-    workerRef.current = new BadukWorker();
+    workerRef.current = createBadukWorker();
     return () => { workerRef.current?.terminate(); };
   }, []);
 

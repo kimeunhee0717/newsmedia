@@ -1,6 +1,7 @@
 // ============================================================================
 // 오목 AI — Clean Minimax + Alpha-Beta + Make/Unmake
 // ============================================================================
+export {};
 type Stone = 'black' | 'white' | null;
 type Pos = { row: number; col: number };
 const N = 15;
