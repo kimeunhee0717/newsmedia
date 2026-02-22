@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import { GomokuGame } from "@/components/tools/GomokuGame";
+import GomokuGame from "@/components/tools/GomokuGame";
 
 export default function GomokuPage() {
   return (

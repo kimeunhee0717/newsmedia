@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import { ChessGame } from "@/components/tools/ChessGame";
+import ChessGame from "@/components/tools/ChessGame";
 
 export default function ChessPage() {
   return (
