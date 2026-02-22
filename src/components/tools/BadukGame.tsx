@@ -1,7 +1,7 @@
 ﻿"use client";
 /* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { ChevronLeft, RotateCcw, Flag, User, Bot, Volume2, VolumeX, SkipForward } from 'lucide-react';
+import { ChevronLeft, RotateCcw, Flag, User, Bot, Volume2, VolumeX, SkipForward } from '@/components/icons/LucideLite';
 import Link from 'next/link';
 
 function SEOHead() { return null; }

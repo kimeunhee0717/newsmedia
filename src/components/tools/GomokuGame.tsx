@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { ChevronLeft, RotateCcw, Trophy, User, Bot, Volume2, VolumeX } from 'lucide-react';
+import { ChevronLeft, RotateCcw, Trophy, User, Bot, Volume2, VolumeX } from '@/components/icons/LucideLite';
 import Link from 'next/link';
 
 function SEOHead() { return null; }

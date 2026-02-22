@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Crown, RotateCcw, Users, Bot, Lightbulb, Undo2 } from 'lucide-react';
+import { Crown, RotateCcw, Users, Bot, Lightbulb, Undo2 } from '@/components/icons/LucideLite';
 
 function SEOHead() {
   return null;

@@ -1,7 +1,7 @@
 ﻿"use client";
 /* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
-import { ChevronLeft, RotateCcw, Undo2, Trophy, Settings, User, Bot, Volume2, VolumeX } from 'lucide-react';
+import { ChevronLeft, RotateCcw, Undo2, Trophy, Settings, User, Bot, Volume2, VolumeX } from '@/components/icons/LucideLite';
 import Link from 'next/link';
 
 
