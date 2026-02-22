@@ -10,6 +10,12 @@ type ToolCard = {
 
 const tools: ToolCard[] = [
   {
+    name: "마크다운 뷰어 및 편집기",
+    description: "마크다운 작성, 실시간 미리보기, 복사와 파일 저장을 한 번에 처리합니다.",
+    href: "/markdown-editor.html",
+    badge: "문서",
+  },
+  {
     name: "복리 계산기",
     description: "초기금, 적립금, 수익률로 장기 복리 효과를 확인합니다.",
     href: "/tools/compound-interest",
