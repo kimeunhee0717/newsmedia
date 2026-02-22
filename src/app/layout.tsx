@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ConvexClientProvider } from "@/components/ConvexClientProvider";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
@@ -38,7 +39,10 @@ export default function RootLayout({
         </head>
         <body className="min-h-screen bg-gray-50">
           <ConvexClientProvider>
-            {children}
+            <div className="flex min-h-screen flex-col">
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
           </ConvexClientProvider>
         </body>
       </html>

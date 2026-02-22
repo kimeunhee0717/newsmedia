@@ -618,7 +618,7 @@ export default function ChessGame() {
               <Crown className="w-6 h-6 text-espresso-800" />
             </div>
             <span className="text-golden-200 text-sm font-medium tracking-wider uppercase">
-              부자타임 도구
+              AI 도구 모음
             </span>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold mb-3">체스 게임</h1>

@@ -41,7 +41,7 @@ export function BmiCalculator() {
   return (
     <section className="max-w-3xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold text-[var(--tools-primary-strong)]">BMI 계산기</h1>
-      <p className="mt-2 text-[var(--tools-muted)]">부자타임 도구를 현재 블로그 톤으로 다시 입힌 버전입니다.</p>
+      <p className="mt-2 text-[var(--tools-muted)]">키와 몸무게 입력만으로 BMI와 체중 범위를 간단히 확인할 수 있습니다.</p>
 
       <div className="mt-6 rounded-2xl border border-[var(--tools-border)] bg-white p-5">
         <div className="grid gap-4 sm:grid-cols-2">

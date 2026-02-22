@@ -155,13 +155,13 @@ const tools: ToolCard[] = [
   },
   {
     name: "장기",
-    description: "원본 장기 풀버전(배치 선택, AI, 무르기, 사운드)을 이식한 보드 게임입니다.",
+    description: "배치 선택, AI 대전, 무르기, 사운드 기능을 제공하는 장기 게임입니다.",
     href: "/tools/janggi",
     badge: "보드",
   },
   {
     name: "바둑",
-    description: "원본 바둑 풀버전(13x13, AI, 집계산/덤)을 이식한 보드 게임입니다.",
+    description: "13x13 보드, AI 대전, 집계산/덤 기능을 제공하는 바둑 게임입니다.",
     href: "/tools/baduk",
     badge: "보드",
   },
@@ -182,7 +182,7 @@ export default function ToolsPage() {
               유용한 도구
             </span>
             <h1 className="mt-4 text-3xl font-bold text-[var(--tools-primary-strong)]">
-              부자타임 도구 이식 허브
+              유용한 도구 허브
             </h1>
             <p className="mt-2 text-[var(--tools-muted)]">
               블로그 본문과 충돌하지 않도록 도구 전용 영역으로 분리했습니다.
@@ -198,9 +198,9 @@ export default function ToolsPage() {
             </span>
           </div>
 
-          <h2 className="mb-3 text-lg font-bold text-[var(--tools-primary-strong)]">계산/생활 도구</h2>
+          <h2 className="mb-3 text-lg font-bold text-[var(--tools-primary-strong)]">보드/게임 도구</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {utilityTools.map((tool) => (
+            {boardTools.map((tool) => (
               <Link
                 key={tool.href}
                 href={tool.href}
@@ -222,9 +222,9 @@ export default function ToolsPage() {
             ))}
           </div>
 
-          <h2 className="mb-3 mt-8 text-lg font-bold text-[var(--tools-primary-strong)]">보드/게임 도구</h2>
+          <h2 className="mb-3 mt-8 text-lg font-bold text-[var(--tools-primary-strong)]">계산/생활 도구</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {boardTools.map((tool) => (
+            {utilityTools.map((tool) => (
               <Link
                 key={tool.href}
                 href={tool.href}

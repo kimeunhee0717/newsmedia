@@ -1,0 +1,10 @@
+{
+  "title": "ChatGPT vs Claude vs Gemini 실전 비교(2026): 글쓰기·요약·코딩에서 무엇을 써야 할까?",
+  "toolName": "ChatGPT / Claude / Gemini",
+  "category": "AI도구",
+  "rating": 4.8,
+  "summary": "세 모델을 같은 과제와 평가표로 테스트해, 실제 업무에서 어떤 도구를 어떤 역할로 써야 효율이 높은지 정리했습니다.",
+  "pricing": "무료 ~ 유료(플랜별 상이)",
+  "contentFile": "content/blog-series/01-chatgpt-claude-gemini-practical-comparison.md",
+  "authorNote": "대시보드 글쓰기 폼에서 content 본문만 붙여넣고, title/toolName/category/rating/summary/pricing은 본 값을 그대로 사용하면 됩니다."
+}

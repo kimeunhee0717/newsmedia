@@ -42,7 +42,7 @@ export function CompoundInterestCalculator() {
   return (
     <section className="mx-auto max-w-3xl px-4 py-10">
       <h1 className="text-3xl font-bold text-[var(--tools-primary-strong)]">복리 계산기</h1>
-      <p className="mt-2 text-[var(--tools-muted)]">부자타임의 핵심 복리 도구를 현재 프로젝트 톤으로 이식했습니다.</p>
+      <p className="mt-2 text-[var(--tools-muted)]">복리 성장 시뮬레이션으로 투자 기간별 예상 자산을 확인할 수 있습니다.</p>
 
       <div className="mt-6 rounded-2xl border border-[var(--tools-border)] bg-white p-5">
         <div className="grid gap-4 sm:grid-cols-2">

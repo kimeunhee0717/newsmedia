@@ -54,7 +54,7 @@ export function AgeCalculator() {
   return (
     <section className="max-w-3xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold text-[var(--tools-primary-strong)]">만나이 계산기</h1>
-      <p className="mt-2 text-[var(--tools-muted)]">부자타임의 나이 계산 도구를 현재 프로젝트 구조로 이식했습니다.</p>
+      <p className="mt-2 text-[var(--tools-muted)]">생년월일을 기준으로 현재 나이와 관련 정보를 빠르게 확인할 수 있습니다.</p>
 
       <div className="mt-6 rounded-2xl border border-[var(--tools-border)] bg-white p-5">
         <div className="grid gap-4 sm:grid-cols-2">

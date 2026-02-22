@@ -1,0 +1,10 @@
+{
+  "title": "AI 검색 도구 실전 비교(2026): Perplexity vs ChatGPT Search vs Gemini, 누가 리서치에 가장 강할까?",
+  "toolName": "Perplexity / ChatGPT Search / Gemini",
+  "category": "AI도구",
+  "rating": 4.7,
+  "summary": "정보 탐색 정확도, 출처 신뢰성, 답변 구조, 후속 심화질문 대응까지 실무 기준으로 AI 검색 도구 3종을 비교했습니다.",
+  "pricing": "무료 ~ 유료(플랜별 상이)",
+  "contentFile": "content/blog-series/03-ai-search-tools-comparison.md",
+  "authorNote": "대시보드 글쓰기 폼에 본문을 붙여넣고 메타 필드는 본 JSON 값을 그대로 입력하면 됩니다."
+}

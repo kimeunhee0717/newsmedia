@@ -1,5 +1,4 @@
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -71,7 +70,6 @@ export default function TermsPage() {
           <p className="mt-8 text-sm text-gray-400">본 약관은 2026년 2월 22일부터 시행됩니다.</p>
         </div>
       </main>
-      <Footer />
     </>
   );
 }

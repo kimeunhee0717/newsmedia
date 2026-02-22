@@ -1,0 +1,10 @@
+{
+  "title": "회의록 자동화 도구 실전 비교(2026): Notion AI vs Fireflies vs Otter, 어떤 조합이 가장 효율적일까?",
+  "toolName": "Notion AI / Fireflies / Otter",
+  "category": "AI도구",
+  "rating": 4.7,
+  "summary": "실제 회의 운영 흐름(녹음, 전사, 요약, 할 일 추출, 공유)에 맞춰 3개 도구를 비교하고, 팀 규모별 추천 조합을 제시합니다.",
+  "pricing": "무료 ~ 유료(플랜별 상이)",
+  "contentFile": "content/blog-series/02-meeting-notes-automation-comparison.md",
+  "authorNote": "대시보드 글쓰기에서 본문(content) 붙여넣기 후 메타 필드는 본 값을 그대로 입력하면 됩니다."
+}
