@@ -1,15 +1,30 @@
 "use client";
 
-import { useMutation } from "convex/react";
-import { api } from "../../../convex/_generated/api";
-import Header from "@/components/Header";
-import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
+import { useMutation } from "convex/react";
+import Header from "@/components/Header";
+import { api } from "../../../convex/_generated/api";
 
-const CATEGORIES = ["디지털라이프", "AI소식", "재테크", "편집중", "브리핑"];
+const CATEGORIES = ["Productivity", "AI News", "Finance", "Interview", "Briefing"];
+const CONVEX_URL = process.env.NEXT_PUBLIC_CONVEX_URL;
 
-export default function Dashboard() {
+function MissingConvexNotice() {
+  return (
+    <>
+      <Header />
+      <main className="mx-auto max-w-3xl px-4 py-20 text-center">
+        <h1 className="mb-4 text-3xl font-bold text-gray-900">Dashboard unavailable</h1>
+        <p className="text-gray-600">
+          Missing <code>NEXT_PUBLIC_CONVEX_URL</code>. Please set the variable in Vercel and redeploy.
+        </p>
+      </main>
+    </>
+  );
+}
+
+function DashboardForm() {
   const { user, isSignedIn } = useUser();
   const createPost = useMutation(api.posts.create);
   const router = useRouter();
@@ -17,7 +32,7 @@ export default function Dashboard() {
   const [form, setForm] = useState({
     title: "",
     toolName: "",
-    category: "디지털라이프",
+    category: CATEGORIES[0],
     rating: 5,
     summary: "",
     content: "",
@@ -29,10 +44,9 @@ export default function Dashboard() {
     return (
       <>
         <Header />
-        <div className="max-w-3xl mx-auto px-4 py-20 text-center">
-          <p className="text-6xl mb-4">🔒</p>
-          <p className="text-lg text-gray-500">로그인이 필요합니다</p>
-        </div>
+        <main className="mx-auto max-w-3xl px-4 py-20 text-center">
+          <p className="text-lg text-gray-600">Please sign in to write a post.</p>
+        </main>
       </>
     );
   }
@@ -44,11 +58,11 @@ export default function Dashboard() {
       await createPost({
         ...form,
         authorId: user!.id,
-        authorName: user!.fullName || user!.username || "익명",
+        authorName: user!.fullName || user!.username || "anonymous",
       });
       router.push("/");
     } catch (err) {
-      alert("오류가 발생했습니다: " + err);
+      alert(`Failed to create post: ${String(err)}`);
     } finally {
       setLoading(false);
     }
@@ -57,68 +71,108 @@ export default function Dashboard() {
   return (
     <>
       <Header />
-      <main className="max-w-3xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">✍️ 새 리뷰 작성</h1>
+      <main className="mx-auto max-w-3xl px-4 py-8">
+        <h1 className="mb-8 text-3xl font-bold text-gray-900">Write a new review</h1>
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 p-8 space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6 rounded-xl border border-gray-200 bg-white p-8">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">리뷰 제목</label>
-            <input type="text" required placeholder="예: ChatGPT 3개월 사용 후기"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-              value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
+            <label className="mb-2 block text-sm font-medium text-gray-700">Title</label>
+            <input
+              type="text"
+              required
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-blue-500"
+              value={form.title}
+              onChange={(e) => setForm({ ...form, title: e.target.value })}
+            />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">도구 이름</label>
-              <input type="text" required placeholder="예: ChatGPT"
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                value={form.toolName} onChange={(e) => setForm({ ...form, toolName: e.target.value })} />
+              <label className="mb-2 block text-sm font-medium text-gray-700">Tool Name</label>
+              <input
+                type="text"
+                required
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                value={form.toolName}
+                onChange={(e) => setForm({ ...form, toolName: e.target.value })}
+              />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">카테고리</label>
-              <select className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}>
-                {CATEGORIES.map((cat) => (<option key={cat} value={cat}>{cat}</option>))}
+              <label className="mb-2 block text-sm font-medium text-gray-700">Category</label>
+              <select
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                value={form.category}
+                onChange={(e) => setForm({ ...form, category: e.target.value })}
+              >
+                {CATEGORIES.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">가격</label>
-              <input type="text" required placeholder="예: 무료 / Pro $20/월"
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                value={form.pricing} onChange={(e) => setForm({ ...form, pricing: e.target.value })} />
+              <label className="mb-2 block text-sm font-medium text-gray-700">Pricing</label>
+              <input
+                type="text"
+                required
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                value={form.pricing}
+                onChange={(e) => setForm({ ...form, pricing: e.target.value })}
+              />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">별점 ({form.rating}점)</label>
-              <input type="range" min="1" max="5" className="w-full mt-3"
-                value={form.rating} onChange={(e) => setForm({ ...form, rating: parseInt(e.target.value) })} />
-              <div className="text-center text-lg">{"⭐".repeat(form.rating)}</div>
+              <label className="mb-2 block text-sm font-medium text-gray-700">Rating ({form.rating})</label>
+              <input
+                type="range"
+                min="1"
+                max="5"
+                className="mt-3 w-full"
+                value={form.rating}
+                onChange={(e) => setForm({ ...form, rating: Number.parseInt(e.target.value, 10) })}
+              />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">한줄평</label>
-            <input type="text" required placeholder="예: 만능 AI, 안 쓰는 게 이상한 도구"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-              value={form.summary} onChange={(e) => setForm({ ...form, summary: e.target.value })} />
+            <label className="mb-2 block text-sm font-medium text-gray-700">Summary</label>
+            <input
+              type="text"
+              required
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-blue-500"
+              value={form.summary}
+              onChange={(e) => setForm({ ...form, summary: e.target.value })}
+            />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">리뷰 내용</label>
-            <textarea required rows={12} placeholder="AI 도구를 사용해본 경험을 자세히 적어주세요..."
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-y"
-              value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} />
+            <label className="mb-2 block text-sm font-medium text-gray-700">Content</label>
+            <textarea
+              required
+              rows={12}
+              className="w-full resize-y rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-blue-500"
+              value={form.content}
+              onChange={(e) => setForm({ ...form, content: e.target.value })}
+            />
           </div>
 
-          <button type="submit" disabled={loading}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition disabled:opacity-50">
-            {loading ? "게시 중..." : "🚀 리뷰 게시하기"}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-lg bg-blue-600 py-3 font-medium text-white transition hover:bg-blue-700 disabled:opacity-50"
+          >
+            {loading ? "Publishing..." : "Publish review"}
           </button>
         </form>
       </main>
     </>
   );
+}
+
+export default function DashboardPage() {
+  if (!CONVEX_URL) return <MissingConvexNotice />;
+  return <DashboardForm />;
 }
