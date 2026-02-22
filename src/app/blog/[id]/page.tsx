@@ -1,22 +1,43 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import Header from "@/components/Header";
 import { getConvexClient } from "@/lib/convex";
 import { api } from "../../../../convex/_generated/api";
 import { Id } from "../../../../convex/_generated/dataModel";
-import Header from "@/components/Header";
-import Link from "next/link";
-import type { Metadata } from "next";
 
 export const revalidate = 60;
 
-// 글마다 다른 메타 태그 (SEO + SNS 공유)
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+type Post = {
+  _id: string;
+  title: string;
+  toolName: string;
+  category: string;
+  rating: number;
+  summary: string;
+  content: string;
+  pricing: string;
+  authorName: string;
+  createdAt: number;
+};
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
   const { id } = await params;
+  const client = getConvexClient();
+  if (!client) return { title: "Post" };
+
   try {
-    const client = getConvexClient();
-    const post = await client.query(api.posts.getById, { id: id as Id<"posts"> });
-    if (!post) return { title: "글을 찾을 수 없습니다" };
+    const post = (await client.query(api.posts.getById, {
+      id: id as Id<"posts">,
+    })) as Post | null;
+
+    if (!post) return { title: "Post not found" };
 
     return {
-      title: `${post.title} | AI 도구 리뷰`,
+      title: `${post.title} | AI Tool Review Blog`,
       description: post.summary,
       openGraph: {
         title: post.title,
@@ -27,79 +48,89 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       },
     };
   } catch {
-    return { title: "AI 도구 리뷰 블로그" };
+    return { title: "Post" };
   }
 }
 
-export default async function BlogPost({ params }: { params: Promise<{ id: string }> }) {
+export default async function BlogPost({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
   const client = getConvexClient();
 
-  let post;
-  try {
-    post = await client.query(api.posts.getById, { id: id as Id<"posts"> });
-  } catch {
-    post = null;
+  let post: Post | null = null;
+  if (client) {
+    try {
+      post = (await client.query(api.posts.getById, {
+        id: id as Id<"posts">,
+      })) as Post | null;
+    } catch {
+      post = null;
+    }
   }
 
   if (!post) {
     return (
       <>
         <Header />
-        <div className="max-w-3xl mx-auto px-4 py-20 text-center">
-          <p className="text-6xl mb-4">😢</p>
-          <p className="text-lg text-gray-500">글을 찾을 수 없습니다</p>
-          <Link href="/" className="text-blue-600 hover:underline mt-4 inline-block">← 홈으로 돌아가기</Link>
+        <div className="mx-auto max-w-3xl px-4 py-20 text-center">
+          <p className="text-6xl mb-4">404</p>
+          <p className="text-lg text-gray-500">Post not found</p>
+          <Link href="/" className="mt-4 inline-block text-blue-600 hover:underline">
+            Back to home
+          </Link>
         </div>
       </>
     );
   }
 
-  const stars = "⭐".repeat(post.rating);
+  const stars = "★".repeat(post.rating);
   const date = new Date(post.createdAt).toLocaleDateString("ko-KR");
 
   return (
     <>
       <Header />
-      <article className="max-w-3xl mx-auto px-4 py-8">
-        <Link href="/" className="text-blue-600 hover:underline text-sm mb-6 inline-block">
-          ← 목록으로
+      <article className="mx-auto max-w-3xl px-4 py-8">
+        <Link href="/" className="mb-6 inline-block text-sm text-blue-600 hover:underline">
+          Back to list
         </Link>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-8">
-          <span className="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-medium">
+        <div className="rounded-xl border border-gray-200 bg-white p-8">
+          <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700">
             {post.category}
           </span>
 
-          <h1 className="text-3xl font-bold text-gray-900 mt-4 mb-2">{post.title}</h1>
+          <h1 className="mt-4 mb-2 text-3xl font-bold text-gray-900">{post.title}</h1>
 
-          <div className="flex items-center gap-4 text-sm text-gray-500 mb-6">
+          <div className="mb-6 flex items-center gap-4 text-sm text-gray-500">
             <span>{post.authorName}</span>
             <span>{date}</span>
           </div>
 
-          <div className="bg-gray-50 rounded-lg p-4 mb-6">
+          <div className="mb-6 rounded-lg bg-gray-50 p-4">
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
-                <p className="text-xs text-gray-400">도구</p>
+                <p className="text-xs text-gray-400">Tool</p>
                 <p className="font-bold text-blue-600">{post.toolName}</p>
               </div>
               <div>
-                <p className="text-xs text-gray-400">가격</p>
+                <p className="text-xs text-gray-400">Pricing</p>
                 <p className="font-bold">{post.pricing}</p>
               </div>
               <div>
-                <p className="text-xs text-gray-400">별점</p>
+                <p className="text-xs text-gray-400">Rating</p>
                 <p>{stars}</p>
               </div>
             </div>
           </div>
 
-          <p className="text-lg text-gray-700 font-medium mb-6 bg-blue-50 p-4 rounded-lg italic">
+          <p className="mb-6 rounded-lg bg-blue-50 p-4 text-lg font-medium text-gray-700 italic">
             &quot;{post.summary}&quot;
           </p>
 
-          <div className="prose max-w-none text-gray-700 whitespace-pre-wrap leading-relaxed">
+          <div className="prose max-w-none whitespace-pre-wrap leading-relaxed text-gray-700">
             {post.content}
           </div>
         </div>

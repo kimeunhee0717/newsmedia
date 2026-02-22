@@ -2,17 +2,29 @@ import { getConvexClient } from "@/lib/convex";
 import { api } from "../../../convex/_generated/api";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
-const SITE_TITLE = "AI 도구 리뷰 블로그";
-const SITE_DESCRIPTION = "최신 AI 도구를 직접 써보고 솔직하게 리뷰합니다";
+const SITE_TITLE = "AI Tool Review Blog";
+const SITE_DESCRIPTION =
+  "Hands-on AI tool reviews, practical usage notes, and implementation guides.";
+
+type FeedPost = {
+  _id: string;
+  title: string;
+  summary: string;
+  category: string;
+  authorName: string;
+  createdAt: number;
+};
 
 export async function GET() {
   const client = getConvexClient();
-  let posts: any[] = [];
+  let posts: FeedPost[] = [];
 
-  try {
-    posts = await client.query(api.posts.list);
-  } catch {
-    posts = [];
+  if (client) {
+    try {
+      posts = (await client.query(api.posts.list)) as FeedPost[];
+    } catch {
+      posts = [];
+    }
   }
 
   const itemsXml = posts

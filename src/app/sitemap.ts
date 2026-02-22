@@ -1,25 +1,32 @@
+import type { MetadataRoute } from "next";
 import { getConvexClient } from "@/lib/convex";
 import { api } from "../../convex/_generated/api";
-import type { MetadataRoute } from "next";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
 
-export const revalidate = 3600; // 1시간마다 갱신
+type SitemapPost = {
+  _id: string;
+  createdAt: number;
+};
+
+export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const client = getConvexClient();
-  let posts: any[] = [];
+  let posts: SitemapPost[] = [];
 
-  try {
-    posts = await client.query(api.posts.list);
-  } catch {
-    posts = [];
+  if (client) {
+    try {
+      posts = (await client.query(api.posts.list)) as SitemapPost[];
+    } catch {
+      posts = [];
+    }
   }
 
-  const blogPosts = posts.map((post) => ({
+  const blogPosts: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${SITE_URL}/blog/${post._id}`,
     lastModified: new Date(post.createdAt),
-    changeFrequency: "weekly" as const,
+    changeFrequency: "weekly",
     priority: 0.8,
   }));
 
