@@ -6,13 +6,13 @@ import { getConvexClient } from "@/lib/convex";
 import { api } from "../../convex/_generated/api";
 
 export const metadata: Metadata = {
-  title: "AI Tool Review Blog | Practical Guides and Honest Reviews",
+  title: "AI 도구 리뷰 블로그 | 실사용 리뷰와 활용 가이드",
   description:
-    "Hands-on AI tool reviews, usage guides, and practical workflows you can apply right away.",
+    "최신 AI 도구를 직접 써보고 핵심 장단점, 가격, 추천 대상을 정리해 빠르게 판단할 수 있게 도와드립니다.",
   openGraph: {
-    title: "AI Tool Review Blog",
+    title: "AI 도구 리뷰 블로그",
     description:
-      "Hands-on AI tool reviews, usage guides, and practical workflows you can apply right away.",
+      "최신 AI 도구를 직접 써보고 핵심 장단점, 가격, 추천 대상을 정리해 빠르게 판단할 수 있게 도와드립니다.",
     type: "website",
   },
 };
